@@ -9,6 +9,8 @@ project(
   VERSION ${SKBUILD_PROJECT_VERSION}
   LANGUAGES CXX)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++14 -pthread")
+
 # Find the module development requirements (requires FindPython from 3.17 or
 # scikit-build-core's built-in backport)
 find_package(Python REQUIRED COMPONENTS Interpreter Development.Module)
@@ -20,7 +22,6 @@ include_directories(include ${EIGEN3_INCLUDE_DIR})
 
 # Add a library using FindPython's tooling (pybind11 also provides a helper like
 # this)
-# python_add_library(unitree_arm_interface MODULE src/arm_python_interface.cpp WITH_SOABI)
 pybind11_add_module(unitree_arm_interface src/arm_python_interface.cpp)
 target_link_libraries(unitree_arm_interface PRIVATE pybind11::headers Z1_SDK_${CMAKE_SYSTEM_PROCESSOR})
 
